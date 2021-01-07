@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to "/prototypes/#{@comment.prototype.id}"  
     else
-      render "prototypes/show"
+      # render "prototypes/show"ではなぜエラーが発生するのか？
+      redirect_back(fallback_location: root_path)
     end
   end
 
