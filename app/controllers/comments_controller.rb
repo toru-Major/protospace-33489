@@ -1,11 +1,15 @@
 class CommentsController < ApplicationController
+
+
   def create
   @comment = Comment.new(comment_params)
     if @comment.save
       redirect_to "/prototypes/#{@comment.prototype.id}"  
     else
-      # render "prototypes/show"ではなぜエラーが発生するのか？
-      redirect_back(fallback_location: root_path)
+      @prototype = Prototype.find(params[:prototype_id])
+      @comment = Comment.new
+      @comments = @prototype.comments.includes(:user)
+      render "prototypes/show"
     end
   end
 
